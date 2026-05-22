@@ -78,3 +78,9 @@ id = "ONkvy2m2Zy0ELJVSGI6Vt"
 uri = "file://screenshots/grafana_explore.png"
 type = "image"
 title = "13. Grafana — Explore (граф метрики app_active_users)"
+
+[[outputs]]
+id = "ycIxcyQub2UAPW-WmlU2p"
+uri = "file://report_section8.md"
+type = "text"
+title = "Текст пункта 8 со всеми фрагментами кода"
