@@ -17,3 +17,45 @@ deploymentTarget = "gce"
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[[ports]]
+localPort = 5000
+externalPort = 5000
+
+[[ports]]
+localPort = 8000
+
+[[ports]]
+localPort = 9000
+externalPort = 9000
+
+[[ports]]
+localPort = 9090
+externalPort = 3000
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash start_monitoring.sh"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"

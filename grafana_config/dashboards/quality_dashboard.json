@@ -1,0 +1,75 @@
+{
+  "id": null,
+  "title": "Quality Monitoring - ISO/IEC 25010",
+  "tags": ["quality", "microservice"],
+  "timezone": "browser",
+  "refresh": "5s",
+  "time": { "from": "now-15m", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Active Users",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "targets": [{ "expr": "app_active_users", "legendFormat": "Active Users" }],
+      "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "thresholds": { "steps": [{"color":"green","value":0},{"color":"yellow","value":30},{"color":"red","value":45}] } } }
+    },
+    {
+      "id": 2,
+      "title": "CPU Usage (%)",
+      "type": "gauge",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "targets": [{ "expr": "app_cpu_usage_percent", "legendFormat": "CPU %" }],
+      "fieldConfig": { "defaults": { "min": 0, "max": 100, "unit": "percent", "thresholds": { "steps": [{"color":"green","value":0},{"color":"yellow","value":60},{"color":"red","value":80}] } } }
+    },
+    {
+      "id": 3,
+      "title": "Memory Usage",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "targets": [{ "expr": "app_memory_usage_bytes", "legendFormat": "Memory" }],
+      "fieldConfig": { "defaults": { "unit": "bytes", "color": { "mode": "thresholds" }, "thresholds": { "steps": [{"color":"green","value":0},{"color":"yellow","value":200000000},{"color":"red","value":280000000}] } } }
+    },
+    {
+      "id": 4,
+      "title": "Total Requests",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "targets": [{ "expr": "sum(app_requests_total)", "legendFormat": "Total Requests" }],
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "blue" } } }
+    },
+    {
+      "id": 5,
+      "title": "Request Rate (req/s)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+      "targets": [{ "expr": "rate(app_requests_total[1m])", "legendFormat": "{{endpoint}} {{status}}" }],
+      "fieldConfig": { "defaults": { "unit": "reqps" } }
+    },
+    {
+      "id": 6,
+      "title": "Request Latency (p95)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+      "targets": [{ "expr": "histogram_quantile(0.95, rate(app_request_duration_seconds_bucket[2m]))", "legendFormat": "p95 {{endpoint}}" }],
+      "fieldConfig": { "defaults": { "unit": "s" } }
+    },
+    {
+      "id": 7,
+      "title": "Files Processed by Type",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+      "targets": [{ "expr": "rate(app_files_processed_total[1m])", "legendFormat": "{{file_type}} / {{status}}" }],
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    },
+    {
+      "id": 8,
+      "title": "Error Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+      "targets": [{ "expr": "rate(app_errors_total[1m])", "legendFormat": "{{error_type}}" }],
+      "fieldConfig": { "defaults": { "unit": "short", "color": { "mode": "fixed", "fixedColor": "red" } } }
+    }
+  ],
+  "schemaVersion": 38
+}

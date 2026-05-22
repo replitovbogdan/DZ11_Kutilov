@@ -1,0 +1,80 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "mAt2WevsD0Ts76asz_BaX"
+uri = "file://screenshots/prometheus_targets.png"
+type = "image"
+title = "1. Prometheus — Страница Targets (оба таргета UP)"
+
+[[outputs]]
+id = "VLHvX9591jZ3KkVrlkYXM"
+uri = "file://screenshots/prometheus_config.png"
+type = "image"
+title = "2. Prometheus — Конфигурация (prometheus.yml)"
+
+[[outputs]]
+id = "rWZ65AJsxXftHlA3grjn9"
+uri = "file://screenshots/prometheus_status.png"
+type = "image"
+title = "3. Prometheus — Статус и информация о версии"
+
+[[outputs]]
+id = "E72U4KQohAACGfoXt3vZd"
+uri = "file://screenshots/prometheus_table.png"
+type = "image"
+title = "4. Prometheus — Запрос метрик (PromQL-запрос)"
+
+[[outputs]]
+id = "xRpIv12NhpMdgDOJsTPh4"
+uri = "file://screenshots/metrics_app.png"
+type = "image"
+title = "5. Приложение — Микросервис (источник метрик)"
+
+[[outputs]]
+id = "ZsGxf1qVDE5n75Yk3hYiO"
+uri = "file://screenshots/metrics_endpoint.png"
+type = "image"
+title = "6. Приложение — Эндпоинт /metrics (raw-метрики)"
+
+[[outputs]]
+id = "7smHZT2v285iZEULb2ohz"
+uri = "file://screenshots/grafana_login_pw.png"
+type = "image"
+title = "7. Grafana — Страница входа (v10.4.3)"
+
+[[outputs]]
+id = "cBOHtveI6U61JxqQ9U__1"
+uri = "file://screenshots/grafana_home_loggedin.png"
+type = "image"
+title = "8. Grafana — Главная страница (залогинен как admin)"
+
+[[outputs]]
+id = "ttnYa60skUMk7oxiD34b3"
+uri = "file://screenshots/grafana_datasources_list.png"
+type = "image"
+title = "9. Grafana — Список источников данных (Prometheus подключён)"
+
+[[outputs]]
+id = "uWrtLuFkWMtft3LXHwiSN"
+uri = "file://screenshots/grafana_prometheus_datasource.png"
+type = "image"
+title = "10. Grafana — Настройки источника данных Prometheus"
+
+[[outputs]]
+id = "f3LkcbXEic8QYcMaVy_Ne"
+uri = "file://screenshots/grafana_dashboards_list.png"
+type = "image"
+title = "11. Grafana — Список дашбордов (папка Quality)"
+
+[[outputs]]
+id = "EoUMfVIsVTfDQRcX-RW9b"
+uri = "file://screenshots/grafana_dashboard_quality.png"
+type = "image"
+title = "12. Grafana — Дашборд «Quality Monitoring — ISO/IEC 25010» (живые данные)"
+
+[[outputs]]
+id = "ONkvy2m2Zy0ELJVSGI6Vt"
+uri = "file://screenshots/grafana_explore.png"
+type = "image"
+title = "13. Grafana — Explore (граф метрики app_active_users)"

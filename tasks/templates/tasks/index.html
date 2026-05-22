@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     ФАЙЛ: index.html
+     ПРИЛОЖЕНИЕ: Микросервис обработки файлов JSON/CSV
+     АВТОР: Кутилов Б.А.
+     ДИСЦИПЛИНА: Лабораторная работа №4
+
+     ОПИСАНИЕ:
+     Данный файл является главной страницей веб-интерфейса
+     для микросервиса обработки файлов.
+     ============================================================ -->
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Микросервис обработки файлов - {{ full_name }}</title>
+
+    <style>
+        /* --------------------------------------------------------
+           СБРОС СТАНДАРТНЫХ СТИЛЕЙ БРАУЗЕРА
+        -------------------------------------------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --------------------------------------------------------
+           ОСНОВНОЙ ФОН СТРАНИЦЫ
+        -------------------------------------------------------- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --------------------------------------------------------
+           ОСНОВНОЙ КОНТЕЙНЕР
+        -------------------------------------------------------- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* --------------------------------------------------------
+           ШАПКА САЙТА
+        -------------------------------------------------------- */
+        .header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 30px 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 span {
+            color: #9f7aea;
+        }
+
+        .header p {
+            color: #a0aec0;
+            font-size: 14px;
+        }
+
+        /* --------------------------------------------------------
+           БЛОК С ЗАДАЧАМИ (7 ЭТАПОВ)
+        -------------------------------------------------------- */
+        .tasks-section {
+            background: #f7fafc;
+            padding: 20px 40px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tasks-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .task-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid #9f7aea;
+        }
+
+        .task-number {
+            background: #9f7aea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .task-text {
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        /* --------------------------------------------------------
+           ОСНОВНОЙ КОНТЕНТ
+        -------------------------------------------------------- */
+        .content {
+            padding: 30px 40px;
+        }
+
+        /* --------------------------------------------------------
+           СЕКЦИЯ ЗАГРУЗКИ ФАЙЛОВ
+        -------------------------------------------------------- */
+        .upload-section {
+            background: #edf2f7;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .upload-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .file-input-wrapper {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+        }
+
+        /* --------------------------------------------------------
+           ТАБЛИЦА РЕЗУЛЬТАТОВ
+        -------------------------------------------------------- */
+        .results-section {
+            margin-bottom: 30px;
+        }
+
+        .results-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #2d3748;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .status-success {
+            color: #38a169;
+            font-weight: bold;
+        }
+
+        .status-failed {
+            color: #e53e3e;
+            font-weight: bold;
+        }
+
+        /* --------------------------------------------------------
+           СЕКЦИЯ ГРАФИКОВ
+        -------------------------------------------------------- */
+        .charts-section {
+            margin-bottom: 30px;
+        }
+
+        .charts-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .chart-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .chart-card p {
+            margin-top: 10px;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        /* --------------------------------------------------------
+           ПОДВАЛ
+        -------------------------------------------------------- */
+        .footer {
+            background: #2d3748;
+            color: #a0aec0;
+            padding: 20px 40px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* --------------------------------------------------------
+           АДАПТИВНЫЙ ДИЗАЙН
+        -------------------------------------------------------- */
+        @media (max-width: 768px) {
+            .header, .content, .tasks-section, .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ========================================================
+             ШАПКА САЙТА
+        ======================================================== -->
+        <div class="header">
+            <h1>📁 Микросервис обработки файлов <span>{{ full_name }}</span></h1>
+            <p>Загрузка и анализ JSON/CSV файлов с визуализацией результатов</p>
+        </div>
+
+        <!-- ========================================================
+             БЛОК С ЗАДАЧАМИ (7 ЭТАПОВ)
+        ======================================================== -->
+        <div class="tasks-section">
+            <h3>📋 Этапы выполнения задач на сегодня:</h3>
+            <div class="tasks-grid">
+                <div class="task-item">
+                    <div class="task-number">1</div>
+                    <div class="task-text">Загрузка файлов JSON/CSV</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-number">2</div>
+                    <div class="task-text">Парсинг и валидация данных</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-number">3</div>
+                    <div class="task-text">Обработка ошибок форматов</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-number">4</div>
+                    <div class="task-text">Измерение времени загрузки</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-number">5</div>
+                    <div class="task-text">Генерация статистики статусов</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-number">6</div>
+                    <div class="task-text">Построение графиков (4 вида)</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-number">7</div>
+                    <div class="task-text">Экспорт отчета с визуализацией</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- ========================================================
+                 ФОРМА ЗАГРУЗКИ ФАЙЛОВ
+            ======================================================== -->
+            <div class="upload-section">
+                <h3>📤 Загрузите файлы для обработки</h3>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="file-input-wrapper">
+                        <input type="file" name="files" multiple accept=".json,.csv,.txt,.xyz">
+                        <button type="submit">🚀 Обработать файлы</button>
+                    </div>
+                </form>
+                <p style="margin-top: 10px; font-size: 12px; color: #718096;">
+                    Поддерживаемые форматы: JSON, CSV. Файлы других форматов будут отмечены как "failed"
+                </p>
+            </div>
+
+            <!-- ========================================================
+                 ТАБЛИЦА РЕЗУЛЬТАТОВ
+            ======================================================== -->
+            {% if results %}
+            <div class="results-section">
+                <h3>📊 Результаты обработки файлов</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Название файла</th>
+                                <th>Формат</th>
+                                <th>Время загрузки (сек)</th>
+                                <th>Статус</th>
+                                <th>Ошибка</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in results %}
+                            <tr>
+                                <td>{{ result.filename|slice:"30" }}</td>
+                                <td>{{ result.format }}</td>
+                                <td>{{ result.load_time|floatformat:3 }}</td>
+                                <td class="{% if result.status == 'success' %}status-success{% else %}status-failed{% endif %}">
+                                    {% if result.status == 'success' %}
+                                        ✅ Успех
+                                    {% else %}
+                                        ❌ Ошибка
+                                    {% endif %}
+                                </td>
+                                <td>{{ result.error|default:"-"|slice:"50" }}</td>
+                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <!-- ========================================================
+                                 БЛОК ГРАФИКОВ (ВИЗУАЛИЗАЦИЯ)
+                                 ВНИМАНИЕ: Каждый if имеет свой endif
+                            ======================================================== -->
+                            {% if charts %}
+                            <div class="charts-section">
+                                <h3>📈 Визуализация данных</h3>
+                                <div class="charts-grid">
+
+                                    <!-- График №1: Распределение статусов -->
+                                    {% if charts.char7 %}
+                                    <div class="chart-card">
+                                        <img src="data:image/png;base64,{{ charts.char7 }}" alt="Распределение статусов">
+                                        <p>Рис. 1 - Распределение статусов загрузки файлов</p>
+                                    </div>
+                                    {% endif %}
+
+                    <!-- График №2: Время загрузки по файлам -->
+                    {% if charts.char8 %}
+                    <div class="chart-card">
+                        <img src="data:image/png;base64,{{ charts.char8 }}" alt="Время загрузки">
+                        <p>Рис. 2 - Время загрузки по файлам</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- График №3: Сравнение успешных/неудачных -->
+                    {% if charts.char9 %}
+                    <div class="chart-card">
+                        <img src="data:image/png;base64,{{ charts.char9 }}" alt="Сравнение успешных/неудачных">
+                        <p>Рис. 3 - Сравнение успешных и неудачных загрузок</p>
+                    </div>
+                    {% endif %}
+
+                    <!-- График №4: Среднее время по форматам -->
+                    {% if charts.char10 %}
+                    <div class="chart-card">
+                        <img src="data:image/png;base64,{{ charts.char10 }}" alt="Среднее время по форматам">
+                        <p>Рис. 4 - Среднее время загрузки по форматам файлов</p>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- ========================================================
+                 ИНФОРМАЦИОННЫЙ БЛОК О ТЕСТОВЫХ ФАЙЛАХ
+            ======================================================== -->
+            <div style="background: #fef5e7; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <h3 style="color: #2d3748; margin-bottom: 10px;">📝 Тестовые файлы</h3>
+                <p style="color: #718096; font-size: 13px;">
+                    При первом запуске создаются тестовые файлы: 
+                    data.json, report.json, config.json, data.csv, backup.csv.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ========================================================
+             ПОДВАЛ САЙТА
+        ======================================================== -->
+        <div class="footer">
+            <p>Микросервис обработки файлов | Разработано: {{ full_name }} | © 2025</p>
+            <p>Поддерживаемые форматы: JSON, CSV | Лицензия: MIT</p>
+        </div>
+
+    </div>
+</body>
+</html>
